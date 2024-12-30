@@ -1,0 +1,68 @@
+import Note from './components/Note'
+
+const Header = ({ course }) => (<div><h1>{course.name}</h1></div>)
+
+const Content = ({ course}) => {
+  console.log('getting here, content');
+  
+  console.log('content', course.name, course.id);
+  const ids = course.id
+  const coursename =  course.name
+  console.log('courseid',ids, 'coursename', coursename[1]);
+  
+  return(
+    <ul>
+      <li>{course.name}</li>
+    </ul>
+      )
+}
+const Course = ({ course }) => { 
+  console.log('Course', course);
+  return (
+  <div>
+    <Header course={course} />
+<ul>
+{course.parts.map(course => 
+<Content key = {course.id} course = {course} />)}
+    
+
+</ul>
+
+    
+  </div>
+)}
+
+const App = () => {
+  console.log('App.jsx');
+  
+  const course = {
+    id: 1,
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      }
+    ]
+  }
+  const ids = course.parts.map(course => course.id)
+console.log('courseid',ids);
+
+  console.log('course object :', course.name);
+
+
+  return <Course course={course} />
+}
+
+export default App
