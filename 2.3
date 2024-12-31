@@ -1,0 +1,97 @@
+// import { loadConfigFromFile } from 'vite';
+import Note from './components/Note'
+
+
+
+const Header = ({ course }) => (<div><h1>{course.name}</h1></div>)
+
+const Content = ({ course}) => {
+  console.log('getting here, content');
+  
+  console.log('content', course.name, course.id);
+  const ids = course.id
+  const coursename =  course.name
+  const exercises = course.exercises
+  console.log('courseid',ids, 'coursename', coursename[1]);
+  
+  return(
+    <ul>
+      <li> {coursename} {exercises}</li>
+      
+
+    </ul>
+      )
+}
+
+const Course = ({ course}) => { 
+  console.log('Course', course);
+  return (
+    <div>
+    <Header course={course} />
+<ul>
+{course.parts.map(course => 
+<Content key = {course.id} course = {course} />)}
+<Calculateexer course = {course}/>
+</ul>
+
+  </div>
+)}
+
+
+const Calculateexer = ({course}) => {
+
+
+  const sumWithInitial = course.parts.map(part => part.exercises) 
+
+const initialValue = 0;
+const exercisesum = sumWithInitial.reduce(
+  (accumulator, currentValue) => accumulator + currentValue,
+  initialValue,
+);
+
+console.log(exercisesum, 'array sum');
+  return(
+    <div>Sum of exercises : {exercisesum}</div>
+  )
+
+}
+
+const App = () => {
+let sum = 0
+  console.log('App.jsx');
+  
+  const course = {
+    id: 1,
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
+      }
+    ]
+  }
+
+
+  console.log('course object :', course.name);
+
+
+  return <Course course={course} sum = {sum} />
+}
+
+export default App
