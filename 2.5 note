@@ -1,0 +1,54 @@
+import ReactDOM from 'react-dom/client'
+
+
+
+const Header = ({ course }) => {
+  return <h1>{course}</h1>;
+};
+
+const Content = ({ coursePart }) => {
+  return (
+    <li>
+      {coursePart.name} {coursePart.exercises}
+    </li>
+  );
+};
+
+const Calculateexer = ({ course }) => {
+  const exercisesum = course.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+
+  return <div>Sum of exercises: {exercisesum}</div>;
+};
+
+const Course = ({ course }) => { 
+  return (
+    <div>
+      {course.map( coursename => 
+        <div key = {coursename.id}>
+      <Header course = {coursename.name} />
+      <ul>
+        {coursename.parts.map(coursePart => 
+      <Content key={coursePart.id} coursePart = {coursePart} />
+        )}
+      <Calculateexer course = {coursename.parts.map(part => part.exercises)}/>
+      </ul>
+      </div>
+  )}
+    </div>
+    )}
+
+
+const Note = ({course}) => {
+  console.log('Note.jsx');
+
+    
+
+
+      return <Course course={course} />; 
+
+}
+
+export default Note
