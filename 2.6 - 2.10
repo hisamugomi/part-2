@@ -1,0 +1,123 @@
+import { useState } from 'react'
+
+const Persondisplay = ({person}) => <li>{person.name} - {person.number}</li>
+
+const Filterfunc =({persons, search}) => {
+
+  console.log('persons array' , persons);
+  
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().startsWith(search.toLowerCase()))
+  console.log('filteredpersons', filteredPersons);
+  console.log('person name', persons.map(names => names.name));
+  
+  
+return(
+  <ul>
+  {filteredPersons.map( person => 
+    <Persondisplay key={person.id} person = {person}/>
+  )}
+</ul>  
+
+)
+}
+
+function addpersontopb(persons, newName, newph, setPersons, setPh, setNewName) {
+
+if (persons.map(names => names.name).find((element) => element === newName)) {
+  alert(`${newName} is already added to phonebook`)
+  console.log('Duplicate!')}
+else {
+const person = {
+  name : newName,
+  number: newph,
+  id : (persons.length + 1)
+}
+setPersons(persons.concat(person))
+setNewName('')
+setPh('')
+
+}}
+
+
+const App = () => {
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ])
+  const [newName, setNewName] = useState('')
+  const [newph, setPh] = useState(0)
+  const personsnames = persons.map(nam => nam.name)
+  const [search, setSearch] = useState('')
+  console.log('persons :', persons);
+console.log('persons name :', personsnames);
+console.log('newname :', newName);
+console.log('person names', persons.map(nam => nam.name));
+  
+
+const addNote = (event) => {
+  event.preventDefault()
+  console.log('button clicked', event.target); 
+  addpersontopb(persons, newName, newph, setPersons, setPh, setNewName)
+}
+
+
+
+const handleNoteChange = (event) => {
+  console.log(event.target.value)
+setNewName(event.target.value)
+}
+
+const handlephchange = (event) => {
+  console.log(event.target.value);
+  setPh(event.target.value)
+  
+}
+
+const Newnameonpb =()=> {
+  setPersons(newName)
+
+}
+
+const searchhandle = (event) => {
+  event.preventDefault()
+
+}
+
+  // Handle search input change
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  // Filter persons based on search input
+
+  
+
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+      <form onSubmit = {searchhandle}>
+        <div>filter show with : <input value = {search} onChange={handleSearchChange} /></div>
+
+      </form>
+      <form onSubmit = {addNote} >
+        <div>
+          name: <input value = {newName} onChange={handleNoteChange}/>
+        </div>
+        <div>phone number: <input value = {newph} onChange={handlephchange} /></div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <h2>Numbers</h2>
+      <ul>
+     <Filterfunc persons={persons} search={search}/>
+      </ul>      
+    </div>
+  )
+}
+
+export default App
